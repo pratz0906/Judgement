@@ -12,7 +12,7 @@ export default function GameOver() {
     <div className="game-over" role="region" aria-label="Game over results">
       <h1>Game Over!</h1>
       <div className="winner-banner" role="status" aria-live="polite">
-        <h2>{winner?.name} wins!</h2>
+        <h2>{winner?.name === 'You' ? 'You win!' : `${winner?.name} wins!`}</h2>
         <p className="winner-score">{totals[0]?.total} points</p>
       </div>
       <div className="final-standings">

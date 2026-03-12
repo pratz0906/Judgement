@@ -16,7 +16,7 @@ export default function RoundConfig({ playerCount, mode, customRounds, onModeCha
     <div className="round-config" role="region" aria-label="Round structure configuration">
       <h3>Round Structure</h3>
       <fieldset className="round-options">
-        <legend className="sr-only">Choose round structure</legend>
+        <legend className="sr-only">Choose a round structure</legend>
         <label className={mode === 'upDown' ? 'selected' : ''}>
           <input type="radio" name="roundMode" checked={mode === 'upDown'} onChange={() => onModeChange('upDown')} />
           Up & Down (1 to {maxCards} to 1)

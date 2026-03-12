@@ -1,3 +1,9 @@
+/**
+ * Global game state provider.
+ * Wraps the game reducer and exposes state, dispatch, and convenience helpers.
+ * Handles bot auto-play (bidding & card play) and auto-acknowledging trick results.
+ */
+
 import React, { createContext, useContext, useReducer, useEffect, useCallback, useRef } from 'react';
 import type { GameState, Card } from '../types/game';
 import type { GameAction } from '../logic/gameActions';
@@ -30,7 +36,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     return getValidBids(totalTricks, state.players, state.currentPlayerIndex, state.dealerIndex);
   }, [state]);
 
-  // Bot auto-play
+  // Bot auto-play: schedule AI bid or card play after a short delay
   useEffect(() => {
     if (botTimeoutRef.current) {
       clearTimeout(botTimeoutRef.current);
@@ -75,7 +81,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     };
   }, [state.phase, state.currentPlayerIndex, state.players, state.trumpSuit, state.trick, state.roundStructure, state.currentRoundIndex, state.dealerIndex]);
 
-  // Auto-acknowledge tricks after a delay
+  // Auto-acknowledge trick results after 1.5 s so play continues without manual input
   useEffect(() => {
     if (state.phase === 'trickResult') {
       const timeout = window.setTimeout(() => {

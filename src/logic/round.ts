@@ -1,11 +1,24 @@
+/**
+ * Round structure generation and trump suit cycling.
+ * Supports multiple game modes: upDown, upOnly, downOnly, and custom.
+ */
+
 import { Suit, SUIT_ORDER } from '../types/game';
 
 export type RoundMode = 'upDown' | 'upOnly' | 'downOnly' | 'custom';
 
+/** Maximum cards each player can receive in a round (52 ÷ playerCount). */
 export function getMaxCardsPerPlayer(playerCount: number): number {
   return Math.floor(52 / playerCount);
 }
 
+/**
+ * Builds the sequence of card counts for each round based on the selected mode.
+ * - upDown: 1 → max → 1 (e.g. 1,2,...,13,...,2,1)
+ * - upOnly: 1 → max
+ * - downOnly: max → 1
+ * - custom: user-supplied list, filtered to valid range
+ */
 export function generateRoundStructure(
   playerCount: number,
   mode: RoundMode,
@@ -31,6 +44,7 @@ export function generateRoundStructure(
   }
 }
 
+/** Cycles the trump suit through SUIT_ORDER (Spades → Diamonds → Clubs → Hearts → repeat). */
 export function getTrumpForRound(roundIndex: number): Suit {
   return SUIT_ORDER[roundIndex % 4];
 }

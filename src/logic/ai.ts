@@ -1,8 +1,18 @@
+/**
+ * AI strategy for bot players: bidding and card selection.
+ * Uses a simple power-heuristic for bids and greedy logic for card play.
+ */
+
 import type { Card, Player, TrickState } from '../types/game';
 import { Suit, Rank } from '../types/game';
 import { getPlayableCards } from './tricks';
 import { getValidBids } from './bidding';
 
+/**
+ * Estimates a bid based on card strength.
+ * Trump Ace/King = 1, Trump Queen = 0.5, Off-suit Ace = 0.7, Off-suit King = 0.3.
+ * Adjusts to the nearest valid bid if the dealer restriction applies.
+ */
 export function aiBid(
   hand: Card[],
   trumpSuit: Suit,
@@ -38,6 +48,11 @@ export function aiBid(
   return bid;
 }
 
+/**
+ * Selects a card for the bot to play.
+ * - When leading: plays highest card if more tricks are needed, otherwise lowest.
+ * - When following: tries to win with the lowest winning card, otherwise dumps lowest.
+ */
 export function aiPlayCard(
   hand: Card[],
   trick: TrickState,
@@ -73,6 +88,7 @@ export function aiPlayCard(
   return playable.reduce((worst, c) => c.rank < worst.rank ? c : worst);
 }
 
+/** Returns the card currently winning the in-progress trick. */
 function getCurrentWinner(trick: TrickState, trumpSuit: Suit): Card {
   let best = trick.cardsPlayed[0].card;
   for (let i = 1; i < trick.cardsPlayed.length; i++) {
@@ -84,6 +100,7 @@ function getCurrentWinner(trick: TrickState, trumpSuit: Suit): Card {
   return best;
 }
 
+/** Checks whether a challenger card would beat the current winner (same logic as tricks.ts). */
 function wouldBeat(challenger: Card, current: Card, leadSuit: Suit, trumpSuit: Suit): boolean {
   const cIsTrump = challenger.suit === trumpSuit;
   const wIsTrump = current.suit === trumpSuit;

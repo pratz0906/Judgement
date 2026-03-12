@@ -1,3 +1,9 @@
+/**
+ * Main game container that renders the correct phase-specific component
+ * (peeking, bidding, playing, trick result, round result, or game over)
+ * along with the shared header and player indicator.
+ */
+
 import { useGame } from '../../context/GameContext';
 import TrumpIndicator from '../shared/TrumpIndicator';
 import PlayerIndicator from '../shared/PlayerIndicator';
@@ -34,6 +40,7 @@ export default function GameScreen() {
     return <div className="game-screen">{renderPhase()}</div>;
   }
 
+  // First leader is the player after the dealer (clockwise)
   const firstLeaderIndex = (state.dealerIndex + 1) % state.players.length;
 
   return (

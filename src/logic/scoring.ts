@@ -1,5 +1,14 @@
+/**
+ * Scoring logic for Judgement (Kachufool).
+ *
+ * Scoring formula per round:
+ *  - Correct bid:  +10 + (10 × tricks won)
+ *  - Incorrect bid: -(10 × bid)
+ */
+
 import type { Player, PlayerRoundScore, RoundScore } from '../types/game';
 
+/** Computes each player's score for the current round based on bid vs tricks won. */
 export function calculateRoundScores(players: Player[]): PlayerRoundScore[] {
   return players.map(p => ({
     playerId: p.id,
@@ -9,6 +18,7 @@ export function calculateRoundScores(players: Player[]): PlayerRoundScore[] {
   }));
 }
 
+/** Aggregates scores across all completed rounds, sorted highest-first. */
 export function calculateTotalScores(
   scoreHistory: RoundScore[]
 ): { playerId: number; total: number }[] {

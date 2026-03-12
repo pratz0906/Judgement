@@ -16,33 +16,37 @@ export default function Scoreboard({ scoreHistory, players, currentRound }: Prop
       <table aria-label="Scores by round">
         <thead>
           <tr>
-            <th scope="col">Player</th>
-            {scoreHistory.map((r, i) => (
-              <th key={i} scope="col" className={i === currentRound - 1 ? 'round-current' : ''}>
-                R{r.roundNumber}
-              </th>
+            <th scope="col">Round</th>
+            {players.map(player => (
+              <th key={player.id} scope="col" className="player-cell">{player.name}</th>
             ))}
-            <th scope="col" className="total-col">Total</th>
           </tr>
         </thead>
         <tbody>
-          {players.map(player => (
-            <tr key={player.id}>
-              <th scope="row" className="player-cell">{player.name}</th>
-              {scoreHistory.map((round, i) => {
+          {scoreHistory.map((round, i) => (
+            <tr key={i}>
+              <th scope="row" className={i === currentRound - 1 ? 'round-current' : ''}>
+                R{round.roundNumber}
+              </th>
+              {players.map(player => {
                 const ps = round.playerScores.find(s => s.playerId === player.id);
-                if (!ps) return <td key={i}>-</td>;
+                if (!ps) return <td key={player.id}>-</td>;
                 const hit = ps.bid === ps.tricksWon;
                 return (
-                  <td key={i} className={hit ? 'score-hit' : 'score-miss'}>
+                  <td key={player.id} className={hit ? 'score-hit' : 'score-miss'}>
                     {ps.roundPoints}
-                    <small className="bid-info"> ({ps.bid}/{ps.tricksWon})</small>
+                    <small className="bid-info"> ({ps.tricksWon}/{ps.bid})</small>
                   </td>
                 );
               })}
-              <td className="total-col">{totalMap.get(player.id) ?? 0}</td>
             </tr>
           ))}
+          <tr className="total-row">
+            <th scope="row" className="total-col">Total</th>
+            {players.map(player => (
+              <td key={player.id} className="total-col">{totalMap.get(player.id) ?? 0}</td>
+            ))}
+          </tr>
         </tbody>
       </table>
     </div>

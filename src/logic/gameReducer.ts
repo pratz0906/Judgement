@@ -1,3 +1,9 @@
+/**
+ * Central game reducer handling all state transitions for the Judgement card game.
+ * Actions flow: START_GAME → (PLAYER_PEEKED) → PLACE_BID → PLAY_CARD →
+ *   ACKNOWLEDGE_TRICK → (repeat or NEXT_ROUND) → GAME_OVER / RESTART.
+ */
+
 import type { GameState, Player } from '../types/game';
 import { Suit } from '../types/game';
 import type { GameAction } from './gameActions';
@@ -25,6 +31,7 @@ function nextPlayerIndex(current: number, playerCount: number): number {
   return (current + 1) % playerCount;
 }
 
+/** Deals cards, sets trump, and determines the first bidder for the current round. */
 function startDealing(state: GameState): GameState {
   const cardsPerPlayer = state.roundStructure[state.currentRoundIndex];
   const trump = getTrumpForRound(state.currentRoundIndex);
@@ -122,6 +129,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         leadSuit,
       };
 
+    // If all players have played, resolve the trick winner
       if (newTrick.cardsPlayed.length === players.length) {
         const winnerId = resolveTrickWinner(newTrick, state.trumpSuit);
         const updatedPlayers = players.map(p =>
@@ -148,6 +156,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     case 'ACKNOWLEDGE_TRICK': {
       const cardsPerPlayer = state.roundStructure[state.currentRoundIndex];
 
+      // All tricks for the round are complete — record scores and show round result
       if (state.trickNumber >= cardsPerPlayer) {
         const roundScores = calculateRoundScores(state.players);
         const roundScore = {
@@ -164,6 +173,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         };
       }
 
+      // More tricks remain — start the next trick led by the previous winner
       const leadPlayer = state.trickWinner!;
       return {
         ...state,

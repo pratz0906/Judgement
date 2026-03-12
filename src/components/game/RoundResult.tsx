@@ -1,10 +1,13 @@
 import { useGame } from '../../context/GameContext';
 import type { Player, PlayerRoundScore } from '../../types/game';
+import { calculateTotalScores } from '../../logic/scoring';
 import Scoreboard from '../shared/Scoreboard';
 
 export default function RoundResult() {
   const { state, dispatch } = useGame();
   const lastRound = state.scoreHistory[state.scoreHistory.length - 1];
+  const totals = calculateTotalScores(state.scoreHistory);
+  const totalMap = new Map(totals.map(t => [t.playerId, t.total]));
 
   return (
     <div className="round-result" role="region" aria-label="Round results">
@@ -17,6 +20,7 @@ export default function RoundResult() {
               <th scope="col">Bid</th>
               <th scope="col">Won</th>
               <th scope="col">Points</th>
+              <th scope="col">Total</th>
             </tr>
           </thead>
           <tbody>
@@ -31,16 +35,17 @@ export default function RoundResult() {
                   <td className="points-cell">
                     {ps.roundPoints > 0 ? `+${ps.roundPoints}` : ps.roundPoints}
                   </td>
+                  <td className="total-col">{totalMap.get(ps.playerId) ?? 0}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
-      <Scoreboard scoreHistory={state.scoreHistory} players={state.players} currentRound={lastRound.roundNumber} />
       <button className="next-btn" onClick={() => dispatch({ type: 'NEXT_ROUND' })}>
         {state.currentRoundIndex + 1 >= state.roundStructure.length ? 'See Final Results' : 'Next Round'}
       </button>
+      <Scoreboard scoreHistory={state.scoreHistory} players={state.players} currentRound={lastRound.roundNumber} />
     </div>
   );
 }

@@ -1,9 +1,21 @@
+/**
+ * Bidding rules for Judgement (Kachufool).
+ *
+ * The dealer (last bidder) is restricted: the total of all bids
+ * must NOT equal the number of tricks available in the round.
+ */
+
 import type { Player } from '../types/game';
 
+/** Checks whether the given player is the dealer (last to bid). */
 export function isLastBidder(playerIndex: number, dealerIndex: number): boolean {
   return playerIndex === dealerIndex;
 }
 
+/**
+ * Returns valid bid values for the current player.
+ * For the dealer, the bid that would make total bids equal total tricks is excluded.
+ */
 export function getValidBids(
   totalTricks: number,
   players: Player[],

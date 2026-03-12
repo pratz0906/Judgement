@@ -1,3 +1,8 @@
+/**
+ * Setup screen: lets users configure player names/bots, choose a round mode,
+ * and start the game.
+ */
+
 import { useState } from 'react';
 import type { PlayerConfig } from '../../types/game';
 import { useGame } from '../../context/GameContext';
@@ -40,7 +45,7 @@ export default function SetupScreen() {
   return (
     <div className="setup-screen">
       <h1>Kachufool</h1>
-      <p className="subtitle">The Judgment Card Game</p>
+      <p className="subtitle">The Judgement Card Game</p>
       <PlayerConfigComponent players={players} onChange={setPlayers} />
       <RoundConfigComp
         playerCount={players.length}

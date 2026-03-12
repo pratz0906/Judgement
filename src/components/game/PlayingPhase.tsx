@@ -44,7 +44,7 @@ export default function PlayingPhase() {
                 {isFirstLeader && <span className="leader-badge" aria-label="First to play">1</span>}
               </div>
               <div className="seat-stats-row">
-                Bid: {player.bid ?? '?'} | Won: {player.tricksWon}
+                Won: {player.tricksWon} | Bid: {player.bid ?? '?'}
               </div>
               <div className="seat-card-slot">
                 {played ? (

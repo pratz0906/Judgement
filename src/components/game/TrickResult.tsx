@@ -11,10 +11,10 @@ export default function TrickResult() {
 
   return (
     <div className="trick-result playing-phase" role="region" aria-label="Trick result">
-      <h2 aria-live="polite">{winner?.name} wins the trick!</h2>
+      <h2 aria-live="polite">{winner?.name === 'You' ? 'You win the trick!' : `${winner?.name} wins the trick!`}</h2>
       <div className="circle-table">
         <div className="circle-center-label trick-winner-center">
-          {winner?.name} wins!
+          {winner?.name === 'You' ? 'You win!' : `${winner?.name} wins!`}
         </div>
         {state.players.map((player: Player, idx: number) => {
           const pos = seatPosition(idx, playerCount, humanIndex);
@@ -31,7 +31,7 @@ export default function TrickResult() {
                 {player.name}
               </div>
               <div className="seat-stats-row">
-                Bid: {player.bid ?? '?'} | Won: {player.tricksWon}
+                Won: {player.tricksWon} | Bid: {player.bid ?? '?'}
               </div>
               <div className={`seat-card-slot ${isWinner ? 'seat-card-winner' : ''}`}>
                 {played && <CardComponent card={played.card} small />}

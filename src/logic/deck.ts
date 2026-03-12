@@ -1,6 +1,11 @@
+/**
+ * Deck utilities: shuffle, sort, and deal cards to players.
+ */
+
 import type { Card } from '../types/game';
 import { createFullDeck } from '../constants/deck';
 
+/** Shuffles a deck using the Fisher-Yates algorithm for unbiased randomisation. */
 export function shuffle(deck: Card[]): Card[] {
   const shuffled = [...deck];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -10,6 +15,7 @@ export function shuffle(deck: Card[]): Card[] {
   return shuffled;
 }
 
+/** Sorts a hand by suit (Spades, Hearts, Clubs, Diamonds) then by ascending rank. */
 export function sortHand(hand: Card[]): Card[] {
   const suitOrder = { Spades: 0, Hearts: 1, Clubs: 2, Diamonds: 3 };
   return [...hand].sort((a, b) => {
@@ -19,6 +25,7 @@ export function sortHand(hand: Card[]): Card[] {
   });
 }
 
+/** Creates a shuffled deck and distributes cards evenly to each player. */
 export function deal(playerCount: number, cardsPerPlayer: number): Card[][] {
   const deck = shuffle(createFullDeck());
   const hands: Card[][] = [];

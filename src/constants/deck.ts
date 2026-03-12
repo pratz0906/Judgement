@@ -1,3 +1,9 @@
+/**
+ * Display constants and factory for a standard 52-card deck.
+ * Provides Unicode suit symbols, suit colors, rank labels, and a helper
+ * to generate the full deck of Card objects.
+ */
+
 import type { Card } from '../types/game';
 import { Suit, Rank } from '../types/game';
 
@@ -31,6 +37,7 @@ export const RANK_DISPLAY: Record<Rank, string> = {
   [Rank.Ace]: 'A',
 };
 
+/** Creates a standard 52-card deck (4 suits × 13 ranks), unshuffled. */
 export function createFullDeck(): Card[] {
   const suits = [Suit.Spades, Suit.Diamonds, Suit.Clubs, Suit.Hearts];
   const ranks = [

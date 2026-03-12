@@ -1,3 +1,8 @@
+/**
+ * Core type definitions for the Judgement (Kachufool) card game.
+ * Defines suits, ranks, cards, players, game phases, and overall game state.
+ */
+
 export enum Suit {
   Spades = 'Spades',
   Diamonds = 'Diamonds',
@@ -5,8 +10,10 @@ export enum Suit {
   Hearts = 'Hearts',
 }
 
+/** Fixed suit rotation used to cycle trump suit each round. */
 export const SUIT_ORDER: Suit[] = [Suit.Spades, Suit.Diamonds, Suit.Clubs, Suit.Hearts];
 
+/** Numeric values allow direct rank comparison (higher value = stronger card). */
 export enum Rank {
   Two = 2,
   Three = 3,
@@ -60,6 +67,7 @@ export interface TrickCard {
 export interface TrickState {
   cardsPlayed: TrickCard[];
   leadPlayerId: number;
+  /** Suit of the first card played in this trick; null until the first card is played. */
   leadSuit: Suit | null;
 }
 

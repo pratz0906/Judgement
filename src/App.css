@@ -401,9 +401,9 @@ body {
   padding: 2px 4px;
 }
 
-.card-small .card-center { font-size: 1.2rem; }
-.card-small .card-rank { font-size: 0.65rem; }
-.card-small .card-suit { font-size: 0.6rem; }
+.card-small .card-center { font-size: 1.6rem; }
+.card-small .card-rank { font-size: 0.85rem; }
+.card-small .card-suit { font-size: 0.75rem; }
 
 .card-corner {
   display: flex;
@@ -418,10 +418,10 @@ body {
   transform: rotate(180deg);
 }
 
-.card-rank { font-size: 0.85rem; font-weight: 700; }
-.card-suit { font-size: 0.75rem; }
+.card-rank { font-size: 1.1rem; font-weight: 700; }
+.card-suit { font-size: 1rem; }
 .card-center {
-  font-size: 1.8rem;
+  font-size: 2.4rem;
   text-align: center;
   position: absolute;
   top: 50%;
@@ -731,6 +731,10 @@ body {
   font-weight: 700;
 }
 
+.result-table .total-col {
+  font-weight: 700;
+}
+
 .next-btn, .restart-btn {
   padding: 12px 32px;
   font-size: 1rem;
@@ -791,7 +795,18 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 10px 16px;
-  border-bottom: 1px solid #333;
+  border: 1px solid #555;
+  margin-bottom: -1px;
+}
+
+.standings-list li .standing-name {
+  padding-right: 16px;
+  border-right: 1px solid #555;
+  flex: 1;
+}
+
+.standings-list li .standing-score {
+  padding-left: 16px;
 }
 
 .standings-list li.first-place {
@@ -830,7 +845,7 @@ body {
 }
 
 .scoreboard .player-cell {
-  text-align: left;
+  text-align: center;
   font-weight: 600;
 }
 
@@ -848,7 +863,7 @@ body {
 .scoreboard .score-miss { color: var(--fail); }
 
 .scoreboard .bid-info {
-  color: var(--text-dim);
+  color: #ffffff;
   font-size: 0.7rem;
 }
 

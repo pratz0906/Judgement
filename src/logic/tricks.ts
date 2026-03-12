@@ -1,6 +1,15 @@
+/**
+ * Trick-taking rules: determines which cards a player may play
+ * and resolves which card wins each trick.
+ */
+
 import type { Card, TrickState } from '../types/game';
 import { Suit } from '../types/game';
 
+/**
+ * Returns the subset of cards a player is allowed to play.
+ * Must follow lead suit if possible; otherwise any card is valid.
+ */
 export function getPlayableCards(hand: Card[], leadSuit: Suit | null): Card[] {
   if (leadSuit === null) {
     return hand; // Leading: can play anything
@@ -9,6 +18,7 @@ export function getPlayableCards(hand: Card[], leadSuit: Suit | null): Card[] {
   return suitCards.length > 0 ? suitCards : hand;
 }
 
+/** Determines the winner of a completed trick by comparing all played cards. */
 export function resolveTrickWinner(trick: TrickState, trumpSuit: Suit): number {
   const { cardsPlayed, leadSuit } = trick;
 
@@ -26,6 +36,10 @@ export function resolveTrickWinner(trick: TrickState, trumpSuit: Suit): number {
   return winnerId;
 }
 
+/**
+ * Returns true if the challenger card beats the current winning card.
+ * Priority: trump > lead suit > off-suit (off-suit never wins).
+ */
 function beats(challenger: Card, current: Card, leadSuit: Suit, trumpSuit: Suit): boolean {
   const challengerIsTrump = challenger.suit === trumpSuit;
   const currentIsTrump = current.suit === trumpSuit;

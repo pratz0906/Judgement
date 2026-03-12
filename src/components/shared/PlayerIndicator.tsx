@@ -25,7 +25,7 @@ export default function PlayerIndicator({ players, currentPlayerIndex, dealerInd
               {idx === firstLeaderIndex && <span className="leader-badge" aria-label="First to play">1</span>}
             </span>
             <span className="player-stats">
-              {player.bid !== null ? `Bid: ${player.bid}` : '...'} | Won: {player.tricksWon}
+              Won: {player.tricksWon} | {player.bid !== null ? `Bid: ${player.bid}` : '...'}
             </span>
           </div>
         );

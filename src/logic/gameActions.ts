@@ -1,3 +1,8 @@
+/**
+ * Discriminated union of all actions dispatched to the game reducer.
+ * Each variant represents a distinct user or system event.
+ */
+
 import type { Card, PlayerConfig } from '../types/game';
 
 export type GameAction =
