@@ -99,3 +99,16 @@ export interface GameState {
   scoreHistory: RoundScore[];
   peekQueue: number[];
 }
+
+/** A single completed game record saved to localStorage for stats/history tracking. */
+export interface GameRecord {
+  id: string;
+  date: string;
+  playerName: string;
+  playerCount: number;
+  totalRounds: number;
+  won: boolean;
+  finalScore: number;
+  otherPlayers: { name: string; score: number }[];
+  rounds: { bid: number; tricksWon: number; cardsDealt: number; roundPoints: number }[];
+}

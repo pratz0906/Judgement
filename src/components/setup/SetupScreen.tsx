@@ -12,7 +12,7 @@ import PlayerConfigComponent from './PlayerConfig';
 import RoundConfigComp from './RoundConfig';
 
 export default function SetupScreen() {
-  const { dispatch } = useGame();
+  const { dispatch, navigateTo } = useGame();
   const [players, setPlayers] = useState<PlayerConfig[]>([
     { name: 'You', isBot: false },
     { name: 'Bot Alice', isBot: true },
@@ -55,6 +55,10 @@ export default function SetupScreen() {
         onCustomChange={setCustomRounds}
       />
       <button className="start-btn" onClick={startGame}>Start Game</button>
+      <div className="nav-buttons">
+        <button className="nav-btn" onClick={() => navigateTo('stats')}>Stats</button>
+        <button className="nav-btn" onClick={() => navigateTo('history')}>History</button>
+      </div>
     </div>
   );
 }

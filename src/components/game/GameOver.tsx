@@ -4,7 +4,7 @@ import { calculateTotalScores } from '../../logic/scoring';
 import Scoreboard from '../shared/Scoreboard';
 
 export default function GameOver() {
-  const { state, dispatch } = useGame();
+  const { state, dispatch, navigateTo } = useGame();
   const totals = calculateTotalScores(state.scoreHistory);
   const winner = state.players.find((p: Player) => p.id === totals[0]?.playerId);
 
@@ -40,6 +40,10 @@ export default function GameOver() {
       <button className="restart-btn" onClick={() => dispatch({ type: 'RESTART' })}>
         Play Again
       </button>
+      <div className="nav-buttons">
+        <button className="nav-btn" onClick={() => navigateTo('stats')}>Stats</button>
+        <button className="nav-btn" onClick={() => navigateTo('history')}>History</button>
+      </div>
       <Scoreboard
         scoreHistory={state.scoreHistory}
         players={state.players}
