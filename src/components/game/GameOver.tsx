@@ -17,26 +17,34 @@ export default function GameOver() {
       </div>
       <div className="final-standings">
         <h3>Final Standings</h3>
-        <ol className="standings-list" aria-label="Final standings">
-          {totals.map((t, i) => {
-            const player = state.players.find((p: Player) => p.id === t.playerId);
-            return (
-              <li key={t.playerId} className={i === 0 ? 'first-place' : ''}>
-                <span className="standing-name">{player?.name}</span>
-                <span className="standing-score">{t.total} pts</span>
-              </li>
-            );
-          })}
-        </ol>
+        <table className="standings-table" aria-label="Final standings">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {totals.map((t, i) => {
+              const player = state.players.find((p: Player) => p.id === t.playerId);
+              return (
+                <tr key={t.playerId} className={i === 0 ? 'first-place' : ''}>
+                  <td>{player?.name}</td>
+                  <td>{t.total} pts</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
+      <button className="restart-btn" onClick={() => dispatch({ type: 'RESTART' })}>
+        Play Again
+      </button>
       <Scoreboard
         scoreHistory={state.scoreHistory}
         players={state.players}
         currentRound={state.scoreHistory.length}
       />
-      <button className="restart-btn" onClick={() => dispatch({ type: 'RESTART' })}>
-        Play Again
-      </button>
     </div>
   );
 }
