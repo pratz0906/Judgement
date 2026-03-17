@@ -4,9 +4,8 @@
  */
 
 import { useGame } from '../../context/GameContext';
-import { getGameRecords } from '../../utils/storage';
+import { getGameRecords, clearGameRecords } from '../../utils/storage';
 import { calculatePlayerStats } from '../../logic/stats';
-import { clearGameRecords } from '../../utils/storage';
 
 function pct(value: number): string {
   return `${(value * 100).toFixed(1)}%`;
