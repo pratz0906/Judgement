@@ -39,6 +39,9 @@ Within a suit, cards rank from highest to lowest: **A, K, Q, J, 10, 9, 8, 7, 6, 
 - Configurable round structures (Up & Down, Up Only, Down Only, Custom)
 - Circular table layout with player positions
 - Real-time scoreboard with round-by-round history
+- **Player Stats** — track win/loss rates, hand rates, bid accuracy, and averages across all games
+- **Game History** — view the last 10 games with scores, results, and bid success rates
+- Persistent stats via localStorage, tracked per player name
 - Responsive design for desktop and mobile
 - Keyboard-accessible card interactions
 - Reduced-motion support for accessibility
@@ -102,6 +105,7 @@ src/
     deck.ts                 # Card display constants and deck creation
   utils/
     seatPosition.ts         # Circular table seat positioning
+    storage.ts              # localStorage utilities for game history
   context/
     GameContext.tsx          # Game state provider, bot AI scheduling
   logic/
@@ -112,6 +116,7 @@ src/
     gameReducer.ts          # Core game state machine
     round.ts                # Round structure generation
     scoring.ts              # Point calculation
+    stats.ts                # Player stats computation from game records
     tricks.ts               # Trick resolution and playable card logic
   components/
     setup/
@@ -126,6 +131,9 @@ src/
       RoundResult.tsx       # Round scores and scoreboard
       GameOver.tsx          # Final standings and replay
       PeekScreen.tsx        # Hot-seat card reveal
+    stats/
+      StatsScreen.tsx       # Aggregate player statistics display
+      HistoryScreen.tsx     # Last 10 games history table
     shared/
       CardComponent.tsx     # Single card rendering
       HandDisplay.tsx       # Hand of cards display
